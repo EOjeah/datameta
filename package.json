@@ -48,7 +48,7 @@
     "webpack-cli": "4.2.0"
   },
   "scripts": {
-    "test": "mocha --require @babel/register",
+    "test": "mocha --require @babel/register --exit",
     "build": "webpack",
     "serve": "pm2 start src/server.js --watch --interpreter babel-node",
     "start": "nodemon --exec babel-node src/server.js",
