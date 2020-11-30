@@ -3,7 +3,8 @@ import config from './config';
 
 const app = express();
 const { port } = config;
-
+// conts commit = "qwqw!";
+// this some bull
 app.use(express.static('public'));
 
 app.get('/', (_req, res) => {
