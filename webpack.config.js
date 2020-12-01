@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 const htmlPlugin = new HtmlWebpackPlugin({
   template: './src/index.html',
@@ -9,16 +10,17 @@ const htmlPlugin = new HtmlWebpackPlugin({
 
 module.exports = {
   mode: 'development',
-  target: 'web',
+  target: 'node',
   stats: 'normal',
   devtool: 'inline-source-map',
+  externals: [nodeExternals()],
   entry: {
     main: path.resolve(__dirname, 'src/components/index'),
   },
   output: {
     path: path.resolve(__dirname, 'public'),
     publicPath: '/',
-    filename: '[name].[contenthash].bundle.js',
+    filename: 'bundle.js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -31,27 +33,13 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.s?css$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
-    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    new CleanWebpackPlugin({ cleanStaleWebpackAssets: true }),
     htmlPlugin,
   ],
-  optimization: {
-    moduleIds: 'deterministic',
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
-  },
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/style.scss';
+import './style.css';
 
 const App = () => <div>Body from React component</div>;
 
